@@ -1,6 +1,6 @@
 <?php
 require '../.././libs/Slim/Slim.php';
-require '../.././libs/Jwt/Jwt.php';
+//require '../.././libs/Jwt/Jwt.php';
 require_once '../dbHelper.php';
 
 \Slim\Slim::registerAutoloader();
