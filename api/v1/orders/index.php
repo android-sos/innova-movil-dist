@@ -1,7 +1,7 @@
 <?php
 require '../.././libs/Slim/Slim.php';
 require_once '../dbHelper.php';
-require '../.././libs/Jwt/Jwt.php';
+// require '../.././libs/Jwt/Jwt.php';
 
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
@@ -27,7 +27,7 @@ function auth (){
     //echo $headers['X-Auth-Token'];
 }
 
-$app->get('/orders', 'auth' , function() use ($app){ 
+$app->get('/orders', function() use ($app){ 
 
   //print_r($app->request()->headers()) ;
   //return;
@@ -74,7 +74,7 @@ $app->get('/orders', 'auth' , function() use ($app){
     // HACER EL FILTRO POR LA PANTALLA DEPENDIENDO DEL CASO
 });
 
-$app->get('/orderbycustomer/:id', 'auth', function($id) use ($app) { 
+$app->get('/orderbycustomer/:id', function($id) use ($app) { 
     $data = json_decode($app->request->getBody());
     
     $mandatory = array();
@@ -123,7 +123,7 @@ $app->get('/orderbycustomer/:id', 'auth', function($id) use ($app) {
 });
 
 
-$app->get('/resumebycustomer/:id',  'auth', function($id) use ($app) { 
+$app->get('/resumebycustomer/:id', function($id) use ($app) { 
     $data = json_decode($app->request->getBody());
     
     $mandatory = array();
