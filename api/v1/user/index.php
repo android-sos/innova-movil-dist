@@ -1,5 +1,6 @@
 <?php
 require '../.././libs/Slim/Slim.php';
+require '../.././libs/Jwt/Jwt.php';
 require_once '../dbHelper.php';
 
 \Slim\Slim::registerAutoloader();
@@ -22,6 +23,7 @@ delete(table name, where clause as array)
 // Products
 // update admin.sist_usu set pwd='827ccb0eea8a706c4c34a16891f84e7b'
 
+
 $app->get('/users', function() { 
     global $db;
      $rows = $db->select_sql("
@@ -32,10 +34,19 @@ $app->get('/users', function() {
           u.codigo,
           u.descri,
           u.user_email,
-          u.reg_estatus,
-          u.tipo_usuario
+          u.user_tlf,
+          u.user_dir,
+          u.tipo_usuario,
+          u.pregunta1,
+          u.respuesta1,
+          u.conectado,
+          u.stat_pwr,
+          u.des_key_val,
+          u.des_count, 
+          u.reg_estatus          
       from 
-          admin.sist_usu u    
+          admin.sist_usu u 
+      order by u.descri        
           ");
     echoResponse(200, $rows);
 });
@@ -87,18 +98,35 @@ $app->post('/dologin', function() use ($app) {
       where
           codigo = '".$user."'  
       AND
-          pwd ='".md5($pwd)."'   
+          pwd ='".md5($pwd)."'
       AND 
          reg_estatus = 1;    
     ");
 
-    if($rows["status"]=="success")
-        $rows["message"] = "User Logged successfully.";
-    echoResponse(200, $rows);
+    if($rows["status"] == "success"){
+      $rows["message"] = "User Logged successfully.";
+      // bin2hex(openssl_random_pseudo_bytes(16)); 
+      // $header = array( "typ" => "JWT", "alg" => "RS256");
+
+      $token = array(
+          "id" => bin2hex(openssl_random_pseudo_bytes(16)),
+          "iss" => "http://example.org",
+          "aud" => "http://example.com",
+          "iat" => 1356999524,
+          "nbf" => 1357000000
+      );
+      $rows['token'] = JWT::encode($token, 'secret_server_key');
+      echoResponse(200, $rows);
+    } else {
+      echoResponse(401,$rows);
+    }
 });
 
 $app->post('/user', function() use ($app) { 
     $data = json_decode($app->request->getBody());
+    
+    $data->pwd = md5($data->pwd);
+    
     $mandatory = array();
     $pg_secuencial = '';
     global $db;
@@ -108,22 +136,23 @@ $app->post('/user', function() use ($app) {
     echoResponse(200, $rows);
 });
 
-$app->put('/oreder/:id', function($id) use ($app) { 
+$app->put('/user/:id', function($id) use ($app) { 
     $data = json_decode($app->request->getBody());
-    $condition = array('id'=>$id);
+    $condition = array('codigo'=>$id);
     $mandatory = array();
+    $data->pwd = md5($data->pwd);
     global $db;
-    $rows = $db->update("products", $data, $condition, $mandatory);
+    $rows = $db->update("admin.sist_usu", $data, $condition, $mandatory);
     if($rows["status"]=="success")
-        $rows["message"] = "Product information updated successfully.";
+        $rows["message"] = "Customer information updated successfully.";
     echoResponse(200, $rows);
 });
 
-$app->delete('/products/:id', function($id) { 
+$app->delete('/user/:id', function($id) { 
     global $db;
-    $rows = $db->delete("products", array('id'=>$id));
+    $rows = $db->delete("admin.sist_usu", array('codigo'=>$id));
     if($rows["status"]=="success")
-        $rows["message"] = "Product removed successfully.";
+        $rows["message"] = "Partner removed successfully.";
     echoResponse(200, $rows);
 });
 

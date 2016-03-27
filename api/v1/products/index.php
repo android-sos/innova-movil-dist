@@ -27,20 +27,27 @@ delete(table name, where clause as array)
 */
 
 $app->get('/products', function() { 
+    
     global $db;
-    $rows = $db->select("admin.inn_products",
-        "web_hijo,      
-        product_id,
-        descripcion,
-        costo,
-        iva,
-        precio,
-        utilidad,
-        activo_lista,
-        activo_vender,
-        activo",
-        array(),'','');
-    echoResponse(200, $rows);
+    $rows = $db->select_sql("
+        select 
+            p.web_hijo,      
+            p.product_id,
+            p.descripcion,
+            p.costo,
+            p.iva,
+            p.precio,
+            p.utilidad,
+            p.activo_lista,
+            p.activo_vender,
+            p.activo
+        from 
+            admin.inn_products p
+        order by
+            p.descripcion
+        ");
+
+        echoResponse(200, $rows);
 });
 
   
@@ -70,8 +77,9 @@ $app->get('/product/:id', function($id) use ($app) {
 $app->post('/product', function() use ($app) { 
     $data = json_decode($app->request->getBody());
     $mandatory = array('descripcion');
+    $pg_secuencial = '';
     global $db;
-    $rows = $db->insert("admin.inn_products", $data, $mandatory);
+    $rows = $db->insert("admin.inn_products", $data, $mandatory, $pg_secuencial);
     if($rows["status"]=="success")
         $rows["message"] = "Product added successfully.";
     echoResponse(200, $rows);
@@ -79,7 +87,7 @@ $app->post('/product', function() use ($app) {
 
 $app->put('/product/:id', function($id) use ($app) { 
     $data = json_decode($app->request->getBody());
-    $condition = array('id'=>$id);
+    $condition = array('product_id'=>$id);
     $mandatory = array();
     global $db;
     $rows = $db->update("admin.inn_products", $data, $condition, $mandatory);

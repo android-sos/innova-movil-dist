@@ -73,7 +73,7 @@ $app->get('/orderdetail/:id', function($id) use ($app) {
     and 
         od.order_id = ".$id." 
     where 
-        p.activo = 1
+        p.activo_vender = 1
     order by p.descripcion
     ");
 

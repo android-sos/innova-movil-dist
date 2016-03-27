@@ -108,8 +108,10 @@ class dbHelper {
                 $v .= ":".$key. ", ";
                 $a[":".$key] = $value;
             }
+
             $c = rtrim($c,', ');
             $v = rtrim($v,', ');
+            
             $stmt =  $this->db->prepare("INSERT INTO $table($c) VALUES($v)");
             $stmt->execute($a);
             $affected_rows = $stmt->rowCount();
@@ -148,7 +150,7 @@ class dbHelper {
                 $a[":".$key] = $value;
             }
                 $c = rtrim($c,", ");
-
+               
             $sql = "UPDATE $table SET $c WHERE 1=1 ".$w;
 
             $stmt = $this->db->prepare($sql);
