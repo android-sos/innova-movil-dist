@@ -1,0 +1,51 @@
+.logo {
+    background: url(../../../img/innova_logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 60%;
+    height: 40%;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+}
+
+.logo2 {
+    background: url(../../../img/innova_logo2.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 60%;
+    height: 40%;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+}
+  
+
+.fondo_login {
+    background: url(../../../img/innova_background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+     background-color: #424242;
+}
+
+/*.fondo {
+    background: url(../../../img/innova_background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}*/
+
+.avatar_samuel {
+    background: url(../../../img/samuel.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 60%;
+    height: 40%;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+}
