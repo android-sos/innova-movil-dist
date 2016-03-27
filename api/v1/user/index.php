@@ -115,7 +115,7 @@ $app->post('/dologin', function() use ($app) {
           "iat" => 1356999524,
           "nbf" => 1357000000
       );
-      $rows['token'] = JWT::encode($token, 'secret_server_key');
+      // $rows['token'] = JWT::encode($token, 'secret_server_key');
       echoResponse(200, $rows);
     } else {
       echoResponse(401,$rows);
