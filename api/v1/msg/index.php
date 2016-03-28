@@ -236,14 +236,15 @@ function send_mail($nombre, $mensaje) {
         $cabeceras .= 'Cc: '.$copia1.' ' . "\r\n";
         $cabeceras .= 'Bcc: '.$copia2.' ' . "\r\n";
 
+        $mensajeStatus = false;
 
         try
         {
-              if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
-                    $mensajeStatus = true;
-                }else{
-                    $mensajeStatus = false;
-                }
+              // if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
+              //       $mensajeStatus = true;
+              //   }else{
+              //       $mensajeStatus = false;
+              //   }
         }
         catch(Exception $e)
         {
