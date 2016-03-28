@@ -26,7 +26,7 @@ $app->get('/send-comment/:cadena', function($cadena) use ($app) {
     $nombre = $data[1];
     $mensaje = $data[2] .', '. $data[3] ;
 
-    echo $desencriptar;
+    //echo $desencriptar;
 
     if ($pase === 'n3H{J%xPnCF'){
         $rows = send_mail( $nombre, $mensaje); 
