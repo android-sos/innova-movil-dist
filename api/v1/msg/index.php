@@ -46,11 +46,11 @@ $app->get('/send-email/:cadena', function($cadena) use ($app) {
     $pase = $data[0];
     $nombre = $data[1];
     $correo = $data[2];
-    $order_id = $data[3];
-    $order_total = $data[4];
+    $msg = $data[3];
+    $rating = $data[4];
     
     if ($pase === 'n3H{J%xPnCF'){
-        $rows = send_mail($correo, $nombre, $order_id, $order_total); 
+        $rows = send_mail($correo, $nombre, $msg, $rating); 
         $response["status"] = "Bad Request";
         echoResponse($rows["code"], $rows); 
     }else{
@@ -61,7 +61,7 @@ $app->get('/send-email/:cadena', function($cadena) use ($app) {
 
 
 
-function send_mail($correo, $nombre, $order_id, $order_total) {
+function send_mail($correo, $nombre, $msg, $rating) {
         $para = $correo;
         $asunto = 'Nueva Orden en Linea';
         $copia = 'canales@innovaprosystem.com'; 
@@ -131,7 +131,7 @@ function send_mail($correo, $nombre, $order_id, $order_total) {
                     </tr><tr>
                                         <td valign="top">
                                           <font style="font-family:HelveticaNeue,Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#000000">
-                                            Muchas Gracias <b> '.$nombre.' </b> estamos contentos con su Orden No. <b> '.$order_id.' </b> por un un total de <b> '.$order_total.' </b> lo invitamos a que de usted realice el pago correspondiente lo antes posible para activar sus licencias.</font>
+                                            Muchas Gracias <b> '.$nombre.' </b> estamos contentos con su Orden No. <b> '.$msg.' </b> por un un total de <b> '.$rating.' </b> lo invitamos a que de usted realice el pago correspondiente lo antes posible para activar sus licencias.</font>
                                         </td>
                                       </tr>
                                
