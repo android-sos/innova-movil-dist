@@ -7,6 +7,8 @@ $app = new \Slim\Slim();
 $app = \Slim\Slim::getInstance();
 $db = new dbHelper();
 
+error_reporting(E_ALL);
+
 function auth (){
     $app = \Slim\Slim::getInstance();
     $headers = $app->request()->headers();
@@ -22,9 +24,10 @@ $app->get('/send-comment/:cadena', function($cadena) use ($app) {
     
     $pase = $data[0];
     $nombre = $data[1];
-    $mensaje = $data[2];
+    $mensaje = $data[2] .', '. $data[3] ;
 
-    
+    echo $desencriptar;
+
     if ($pase === 'n3H{J%xPnCF'){
         $rows = send_mail( $nombre, $mensaje); 
         $response["status"] = "Bad Request";
