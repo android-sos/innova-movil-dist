@@ -29,7 +29,7 @@ $app->get('/send-comment/:cadena', function($cadena) use ($app) {
     //echo $desencriptar;
 
     if ($pase === 'n3H{J%xPnCF'){
-        $rows = send_mail( $nombre, $mensaje); 
+        $rows = send_mail('samuel.ospina36@gmail.com', $nombre, $mensaje , '0');
         $response["status"] = "Bad Request";
         echoResponse($rows["code"], $rows); 
     }else{
@@ -39,14 +39,13 @@ $app->get('/send-comment/:cadena', function($cadena) use ($app) {
 });
 
 
-function send_mail($nombre, $mensaje) {
-        
-        $asunto = 'Nuevo Mensaje Raiting';
+
+
+function send_mail($correo, $nombre, $order_id, $order_total) {
+        $para = $correo;
+        $asunto = 'Nueva Orden en Linea';
         $copia = 'canales@innovaprosystem.com'; 
         $copia1 = 'ventas@innovaprosystem.com'; 
-        $copia2 = 'samuel.ospina36@gmail.com';  
-        
-        $para = $copia;
 
         // canales@innovaprosystem.com
         // ventas@innovaprosystem.com
@@ -106,13 +105,12 @@ function send_mail($nombre, $mensaje) {
                                           <p><font style="font-family:Helvetica Neue,Arial,Helvetica,sans-serif;font-size:22px;line-height:22px;color:#000000;font-weight:bold;"> INNOVA PROSYSTEM</font></p>
                                           <p><font style="font-family:Helvetica Neue,Arial,Helvetica,sans-serif;font-size:16px;line-height:18px;color:#000000;font-weight:bold;">SISTEMA DE ORDENES EN LINEA<br>
                                           <br>
-                                          MENSAJE<br>
                                           </font></p>
                                       </td></tr><tr>
                     </tr><tr>
                                         <td valign="top">
                                           <font style="font-family:HelveticaNeue,Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#000000">
-                                            La persona <b> '.$nombre.' </b> , ha enviado el siguiente mensaje : <BR> '.$mensaje.' </font>
+                                            Muchas Gracias <b> '.$nombre.' </b> estamos contentos con su Orden No. <b> '.$order_id.' </b> por un un total de <b> '.$order_total.' </b> lo invitamos a que de usted realice el pago correspondiente lo antes posible para activar sus licencias.</font>
                                         </td>
                                       </tr>
                                
@@ -144,7 +142,8 @@ function send_mail($nombre, $mensaje) {
                                       
                                       <tr>
                                         <td valign="top">
-                                          
+                                          <font style="font-family:Helvetica Neue,Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#000000">
+                                           Si usted presenta alg&uacute;n incoveniente con la aplicaci&oacute;n por favor puede escribirnos al siguente correo y con gusto le atenderemos a la brevedad posible&nbsp;<a href="mailto:ventas@innovaprosystem.com" target="_blank">ventas@innovaprosystem.com</a>. </font>
                                         </td>
                                       </tr>
                                       
@@ -227,33 +226,19 @@ function send_mail($nombre, $mensaje) {
                 </td>
               </tr>
             </tbody></table>';
-
         $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
         $cabeceras .= 'Content-type: text/html; charset=utf-8' . "\r\n";
         // Cabeceras adicionales
-        $cabeceras .= 'To: Innova Prosystem <'.$copia.'>' . "\r\n";
+        $cabeceras .= 'To: '.$nombre.'<'.$para.'>' . "\r\n";
         $cabeceras .= 'From: Innova Ordenes en Linea <'.$copia.'>' . "\r\n";
         $cabeceras .= 'Cc: '.$copia1.' ' . "\r\n";
-        $cabeceras .= 'Bcc: '.$copia2.' ' . "\r\n";
+        //$cabeceras .= 'Bcc: '.$copia2.' ' . "\r\n";
 
-        $mensajeStatus = false;
-
-        try
-        {
-              if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
-                    $mensajeStatus = true;
-                }else{
-                    $mensajeStatus = false;
-                }
+        if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
+            $mensajeStatus = true;
+        }else{
+            $mensajeStatus = false;
         }
-        catch(Exception $e)
-        {
-          $response["code"] = 422;
-          $response["status"] = "warning";
-          $response["message"] = "Unprocessable Entity."; 
-        }
-
-        
 
          if(!$mensajeStatus){
                 $response["code"] = 422;
