@@ -108,13 +108,13 @@ $app->post('/dologin', function() use ($app) {
       // bin2hex(openssl_random_pseudo_bytes(16)); 
       // $header = array( "typ" => "JWT", "alg" => "RS256");
 
-      $token = array(
-          "id" => bin2hex(openssl_random_pseudo_bytes(16)),
-          "iss" => "http://example.org",
-          "aud" => "http://example.com",
-          "iat" => 1356999524,
-          "nbf" => 1357000000
-      );
+      // $token = array(
+      //     "id" => bin2hex(openssl_random_pseudo_bytes(16)),
+      //     "iss" => "http://example.org",
+      //     "aud" => "http://example.com",
+      //     "iat" => 1356999524,
+      //     "nbf" => 1357000000
+      // );
       // $rows['token'] = JWT::encode($token, 'secret_server_key');
       echoResponse(200, $rows);
     } else {
@@ -140,7 +140,13 @@ $app->put('/user/:id', function($id) use ($app) {
     $data = json_decode($app->request->getBody());
     $condition = array('codigo'=>$id);
     $mandatory = array();
-    $data->pwd = md5($data->pwd);
+
+    
+    if (array_key_exists("pwd",$data))
+    {
+       $data->pwd = md5($data->pwd);
+    }
+
     global $db;
     $rows = $db->update("admin.sist_usu", $data, $condition, $mandatory);
     if($rows["status"]=="success")
