@@ -47,7 +47,7 @@ $app->get('/send-email/:cadena', function($cadena) use ($app) {
     $nombre = $data[1];
     $correo = $data[2];
     $order_id = $data[3];
-    $order_total =  number_format($data[4], 2, ",", ".");
+    $order_total = $data[4];
     
     if ($pase === 'n3H{J%xPnCF'){
         $rows = send_mail($correo, $nombre, $order_id, $order_total); 
