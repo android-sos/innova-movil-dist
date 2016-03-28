@@ -131,7 +131,7 @@ function send_mail($correo, $nombre, $msg, $rating) {
                     </tr><tr>
                                         <td valign="top">
                                           <font style="font-family:HelveticaNeue,Arial,Helvetica,sans-serif;font-size:13px;line-height:18px;color:#000000">
-                                            Muchas Gracias <b> '.$nombre.' </b> estamos contentos con su Orden No. <b> '.$msg.' </b> por un un total de <b> '.$rating.' </b> lo invitamos a que de usted realice el pago correspondiente lo antes posible para activar sus licencias.</font>
+                                            Muchas Gracias <b> '.$nombre.' </b> estamos contentos en leer su Mensaje: <b> '.$msg.' </b> y de harbenos calificado con: <b> '.$rating.' </b> Puntos.</font>
                                         </td>
                                       </tr>
                                
