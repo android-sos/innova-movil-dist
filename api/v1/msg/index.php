@@ -240,15 +240,17 @@ function send_mail($nombre, $mensaje) {
 
         try
         {
-              // if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
-              //       $mensajeStatus = true;
-              //   }else{
-              //       $mensajeStatus = false;
-              //   }
+              if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
+                    $mensajeStatus = true;
+                }else{
+                    $mensajeStatus = false;
+                }
         }
         catch(Exception $e)
         {
-          print_r $e->getMessage();
+          $response["code"] = 422;
+          $response["status"] = "warning";
+          $response["message"] = "Unprocessable Entity."; 
         }
 
         
