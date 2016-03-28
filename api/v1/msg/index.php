@@ -227,6 +227,7 @@ function send_mail($nombre, $mensaje) {
                 </td>
               </tr>
             </tbody></table>';
+
         $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
         $cabeceras .= 'Content-type: text/html; charset=utf-8' . "\r\n";
         // Cabeceras adicionales
@@ -235,11 +236,21 @@ function send_mail($nombre, $mensaje) {
         $cabeceras .= 'Cc: '.$copia1.' ' . "\r\n";
         $cabeceras .= 'Bcc: '.$copia2.' ' . "\r\n";
 
-        if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
-            $mensajeStatus = true;
-        }else{
-            $mensajeStatus = false;
+
+        try
+        {
+              if(mail($para, $asunto, $cuerpo, $cabeceras)){ 
+                    $mensajeStatus = true;
+                }else{
+                    $mensajeStatus = false;
+                }
         }
+        catch(Exception $e)
+        {
+          print_r $e->getMessage();
+        }
+
+        
 
          if(!$mensajeStatus){
                 $response["code"] = 422;
