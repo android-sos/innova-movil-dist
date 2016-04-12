@@ -37,6 +37,7 @@ $app->get('/users', function() {
           u.user_tlf,
           u.user_dir,
           u.tipo_usuario,
+          u.tipo_partner,
           u.pregunta1,
           u.respuesta1,
           u.conectado,
