@@ -23,7 +23,6 @@ delete(table name, where clause as array)
 // Products
 // update admin.sist_usu set pwd='827ccb0eea8a706c4c34a16891f84e7b'
 
-
 $app->get('/users', function() { 
     global $db;
      $rows = $db->select_sql("
